@@ -1,3 +1,9 @@
+---
+layout: default
+title: "1. Introduction"
+nav_order: 1
+---
+
 # 1. Introduction
 This section sets the stage for understanding MongoDB query performance, what it means, why it matters, and how to measure and improve it. We looked at a real-world example where a simple index reduced query time from 1 second to under 10ms, showing how small changes can have massive impact.
 

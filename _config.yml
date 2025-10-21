@@ -8,6 +8,13 @@ remote_theme: just-the-docs/just-the-docs
 color_scheme: dark
 search_enabled: true
 heading_anchors: true
+logo: ""  # This removes any logo and just shows the title
+aux_nav_spacing: normal  # Adjusts the spacing in the navigation
+
+# Navigation ordering
+nav:
+  sort: true  # Enables sorting
+  sort_by: title  # Sort by title
 
 # Navigation
 nav_external_links:

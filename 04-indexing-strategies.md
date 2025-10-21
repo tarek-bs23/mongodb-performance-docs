@@ -1,3 +1,9 @@
+---
+layout: default
+title: "4. Indexing strategies"
+nav_order: 4
+---
+
 # 4. Indexing Strategies
 
 Indexing is one of the most powerful tools you have to improve MongoDB query performance. Without the right indexes, even a simple query can become painfully slow. But with the right ones, you can reduce query time from seconds to milliseconds.

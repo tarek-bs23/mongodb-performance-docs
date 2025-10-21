@@ -1,3 +1,9 @@
+---
+layout: default
+title: "5. Query optimization"
+nav_order: 5
+---
+
 # 5. Query Optimization Techniques
 
 Writing queries that work is one thing. Writing queries that scale is another. When your app starts growing and your database gets bigger, even small inefficiencies can snowball into major performance issues.
