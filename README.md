@@ -67,4 +67,7 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 A synthetic e-commerce dataset is included in the `data/` folder. Import it using:
 
 ```bash
-mongoimport --db ecommerce --collection orders --file ./data/orders-sample.json --jsonArray -->
+mongoimport --db ecommerce --collection orders --file ./data/orders-sample.json --jsonArray 
+```
+
+-->
