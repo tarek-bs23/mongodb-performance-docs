@@ -1,25 +1,37 @@
 title: MongoDB Performance Guide
 description: A comprehensive guide to MongoDB performance optimization from beginner to advanced
-theme: jekyll-theme-minimal
 baseurl: "/mongodb-performance-docs"
 url: "https://tarek-bs23.github.io"
 
-# Build settings
-markdown: kramdown
-highlighter: rouge
+# Theme settings
+remote_theme: just-the-docs/just-the-docs
+color_scheme: dark
+search_enabled: true
+heading_anchors: true
 
 # Navigation
-header_pages:
-  - 01-introduction.md
-  - 02-mongodb-internals.md
-  - 03-monitoring-and-profiling.md
-  - 04-indexing-strategies.md
-  - 05-query-optimization.md
-  - 06-aggregation-optimization.md
-  - 07-schema-design.md
-  - 08-advanced-topics.md
-  - 09-case-studies.md
+nav_external_links:
+  - title: GitHub Repository
+    url: https://github.com/tarek-bs23/mongodb-performance-docs
+    hide_icon: false
 
-# Theme settings
-show_downloads: false
-google_analytics: # Add your Google Analytics tracking ID here
+aux_links:
+  "View on GitHub":
+    - "https://github.com/tarek-bs23/mongodb-performance-docs"
+
+# Enable copy code button
+enable_copy_code_button: true
+
+# Footer content
+footer_content: "Copyright &copy; 2025 MongoDB Performance Guide. Distributed under an MIT license."
+
+# Collections for better organization
+collections:
+  docs:
+    permalink: "/:collection/:path/"
+    output: true
+
+just_the_docs:
+  collections:
+    docs:
+      name: Documentation

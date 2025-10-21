@@ -1,7 +1,9 @@
 ---
-layout: home
-title: MongoDB Query Performance Guide
+layout: default
+title: Home
 nav_order: 1
+permalink: /
+description: "A comprehensive guide to MongoDB performance optimization"
 ---
 
 # MongoDB Query Performance Check & Optimization Guide
