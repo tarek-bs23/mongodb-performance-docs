@@ -1,3 +1,25 @@
 title: MongoDB Performance Guide
-description: Learn MongoDB performance optimization from beginner to advanced
-theme: minima
+description: A comprehensive guide to MongoDB performance optimization from beginner to advanced
+theme: jekyll-theme-minimal
+baseurl: "/mongodb-performance-docs"
+url: "https://tarek-bs23.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Navigation
+header_pages:
+  - 01-introduction.md
+  - 02-mongodb-internals.md
+  - 03-monitoring-and-profiling.md
+  - 04-indexing-strategies.md
+  - 05-query-optimization.md
+  - 06-aggregation-optimization.md
+  - 07-schema-design.md
+  - 08-advanced-topics.md
+  - 09-case-studies.md
+
+# Theme settings
+show_downloads: false
+google_analytics: # Add your Google Analytics tracking ID here
