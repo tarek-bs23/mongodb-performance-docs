@@ -1,0 +1,70 @@
+# MongoDB Query Performance Check & Optimization Guide
+
+Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A comprehensive, topic-based resource designed to help developers and engineers improve MongoDB query performance using local MongoDB installations.
+
+---
+
+## 📚 Topics Covered
+
+1. **Introduction**
+   - What is MongoDB query performance?
+   - Importance of query performance
+   - Overview of MongoDB architecture
+
+2. **Understanding MongoDB Internals**
+   - How MongoDB Stores Data (BSON, Documents, Collections).
+   - How MongoDB executes queries
+   - Query planner and execution stages
+   - Storage engine basics (WiredTiger)
+
+3. **Monitoring and Profiling Tools**
+   - Using `explain()` and interpreting output
+   - MongoDB Compass performance tab
+   - Query profiler and logs
+
+4. **Indexing Strategies**
+   - Types of indexes: single, compound, multikey, text, geo
+   - Covered queries and index cardinality
+   - Indexing best practices
+
+5. **Query Optimization Techniques**
+   - Efficient query patterns
+   - Avoiding anti-patterns (`$where`, `$regex`, `$in`)
+   - Pagination strategies (`skip` vs range queries)
+   - Projection and filtering
+
+6. **Aggregation Pipeline Optimization**
+   - Pipeline stage ordering
+   - Performance tips for `$match`, `$project`, `$group`
+   - `$facet`, `$bucket`, and `$lookup` considerations
+
+7. **Schema Design for Performance**
+   - Embedding vs referencing
+   - Document size and nesting
+   - Schema evolution and impact on queries
+
+8. **Advanced Topics**
+   - Sharding and performance
+   - Caching strategies
+   - Query plan caching
+   - Working with large datasets
+
+9. **Case Studies and Real-World Examples**
+   - Before/after optimization examples
+   - Metrics comparison and lessons learned
+
+---
+
+## 🛠️ Requirements
+
+- MongoDB (local installation)
+- MongoDB Compass (optional)
+
+<!-- ---
+
+## 📦 Sample Dataset
+
+A synthetic e-commerce dataset is included in the `data/` folder. Import it using:
+
+```bash
+mongoimport --db ecommerce --collection orders --file ./data/orders-sample.json --jsonArray -->
