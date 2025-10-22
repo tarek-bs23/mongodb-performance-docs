@@ -91,14 +91,14 @@ const randomCoordinates = () => [faker.location.longitude(), faker.location.lati
 // 5️⃣ Seeder Configurations
 // ============================
 const SEED_CONFIG = {
-    NUM_USERS: 100_000,
-    NUM_PRODUCTS: 10_000,
-    NUM_ORDERS: 500_000,
-    NUM_USER_ACTIVITY: 500_000,
-    NUM_BLOG_POSTS: 1_000,
-    NUM_COMMENTS: 25_000,
-    NUM_PLACES: 500,
-    NUM_LOGS: 1_000_000,
+    NUM_USERS: 1_000_000,
+    NUM_PRODUCTS: 100_000,
+    NUM_ORDERS: 10_000_000,
+    NUM_USER_ACTIVITY: 20_000_000,
+    NUM_BLOG_POSTS: 10_000,
+    NUM_COMMENTS: 2_500_000,
+    NUM_PLACES: 5_000,
+    NUM_LOGS: 10_000_000,
 };
 
 // ============================
@@ -147,7 +147,7 @@ function printProgress(prefix, current, total) {
                 zipCode: faker.location.zipCode(),
                 location: {type: "Point", coordinates: randomCoordinates()}
             },
-            phone: faker.phone.number(),
+            phone: faker.phone.number({style: "international"}),
             createdAt: faker.date.past(3),
             lastLogin: faker.date.recent(30),
             preferences: {
@@ -164,7 +164,6 @@ function printProgress(prefix, current, total) {
         }
     }
     if (userBatch.length) await db.collection("users").insertMany(userBatch);
-    // printProgress("⏳ Users", SEED_CONFIG.NUM_USERS, SEED_CONFIG.NUM_USERS);
     console.log("✅ Users generation complete!\n");
 
     const customers = await db.collection("users").find({role: "customer"}, {
@@ -410,7 +409,7 @@ function printProgress(prefix, current, total) {
             },
             location: {type: "Point", coordinates: randomCoordinates()},
             hours: "9AM - 9PM",
-            phone: faker.phone.number(),
+            phone: faker.phone.number({style: "international"}),
             status: randomFromArray(["open", "closed", "temporarily_closed"])
         });
         printProgress("⏳ Places", i + 1, SEED_CONFIG.NUM_PLACES);
