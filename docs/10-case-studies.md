@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "9. Case studies"
-nav_order: 9
+title: "10. Case studies"
+nav_order: 10
 ---
 
 # 9. Case Studies and Real-World Examples

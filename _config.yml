@@ -35,8 +35,11 @@ footer_content: "Copyright &copy; 2025 MongoDB Performance Guide. Distributed un
 # Collections for better organization
 collections:
   docs:
-    permalink: "/:collection/:path/"
+    permalink: "/:path/"
     output: true
+
+# Configure documentation source
+source: docs
 
 just_the_docs:
   collections:

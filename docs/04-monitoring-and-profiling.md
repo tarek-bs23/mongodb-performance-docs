@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "3. Monitoring and profiling"
-nav_order: 3
+title: "4. Monitoring and profiling"
+nav_order: 4
 ---
 
-# 3. Monitoring and Profiling Tools
+# 4. Monitoring and Profiling Tools
 
 When you're trying to figure out why a MongoDB query is slow, you need more than just intuition, you need **visibility**. MongoDB gives us several tools to monitor, profile, and understand what’s happening under the hood.
 

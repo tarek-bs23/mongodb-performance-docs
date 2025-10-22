@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "2. MongoDB Internals"
-nav_order: 2
+title: "3. MongoDB Internals"
+nav_order: 3
 ---
 
-# 2. Understanding MongoDB Internals
+# 3. Understanding MongoDB Internals
 
 This section explains how MongoDB works under the hood how it stores data, executes queries, and manages memory and disk through its storage engine. Knowing this helps you write smarter queries and design better schemas that actually perform well in production.
 

@@ -19,47 +19,56 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
    - Importance of query performance
    - Overview of MongoDB architecture
 
-2. [Understanding MongoDB Internals](./02-mongodb-internals.md)
-   - How MongoDB Stores Data (BSON, Documents, Collections).
+2. [Database Structure Overview](./02-database-structure-overview.md)
+   - Collections and documents
+
+3. [MongoDB Internals](./03-mongodb-internals.md)
+   - How MongoDB Stores Data (BSON, Documents, Collections)
    - How MongoDB executes queries
    - Query planner and execution stages
    - Storage engine basics (WiredTiger)
 
-3. [Monitoring and Profiling Tools](./03-monitoring-and-profiling.md)
+4. [Monitoring and Profiling](./04-monitoring-and-profiling.md)
    - Using `explain()` and interpreting output
    - MongoDB Compass performance tab
    - Query profiler and logs
+   - Performance monitoring tools
 
-4. [Indexing Strategies](./04-indexing-strategies.md)
+5. [Indexing Strategies](./05-indexing-strategies.md)
    - Types of indexes: single, compound, multikey, text, geo
    - Covered queries and index cardinality
    - Indexing best practices
+   - Index maintenance and optimization
 
-5. [Query Optimization Techniques](./05-query-optimization.md)
+6. [Query Optimization](./06-query-optimization.md)
    - Efficient query patterns
    - Avoiding anti-patterns (`$where`, `$regex`, `$in`)
-   - Pagination strategies (`skip` vs range queries)
-   - Projection and filtering
+   - Pagination strategies
+   - Query performance tuning
 
-6. [Aggregation Pipeline Optimization](./06-aggregation-optimization.md)
+7. [Aggregation Optimization](./07-aggregation-optimization.md)
    - Pipeline stage ordering
-   - Performance tips for `$match`, `$project`, `$group`
-   - `$facet`, `$bucket`, and `$lookup` considerations
+   - Performance tips for aggregation operators
+   - Memory usage and optimization
+   - Pipeline optimization strategies
 
-7. [Schema Design for Performance](./07-schema-design.md)
+8. [Schema Design](./08-schema-design.md)
    - Embedding vs referencing
    - Document size and nesting
-   - Schema evolution and impact on queries
+   - Schema evolution strategies
+   - Performance-oriented schema design
 
-8. [Advanced Topics](./08-advanced-topics.md)
+9. [Advanced Topics](./09-advanced-topics.md)
    - Sharding and performance
    - Caching strategies
    - Query plan caching
    - Working with large datasets
 
-9. [Case Studies and Real-World Examples](./09-case-studies.md)
-   - Before/after optimization examples
-   - Metrics comparison and lessons learned
+10. [Case Studies](./10-case-studies.md)
+    - Real-world optimization examples
+    - Performance benchmarks
+    - Best practices implementation
+    - Lessons learned
 
 ---
 

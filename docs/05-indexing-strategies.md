@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "4. Indexing strategies"
-nav_order: 4
+title: "5. Indexing strategies"
+nav_order: 5
 ---
 
-# 4. Indexing Strategies
+# 5. Indexing Strategies
 
 Indexing is one of the most powerful tools you have to improve MongoDB query performance. Without the right indexes, even a simple query can become painfully slow. But with the right ones, you can reduce query time from seconds to milliseconds.
 
@@ -46,7 +46,7 @@ db.products.createIndex({ tags: 1 })
 MongoDB indexes each element in the array. Great for fields like `["electronics", "sale"]`.
 
 
-### 4. Text Index
+### 5. Text Index
 
 Used for **full-text search** on string fields:
 

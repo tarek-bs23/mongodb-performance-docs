@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "7. Schema design"
-nav_order: 7
+title: "8. Schema design"
+nav_order: 8
 ---
 
-# 7. Schema Design for Performance
+# 8. Schema Design for Performance
 
 Schema design in MongoDB isn’t just about organizing data, it directly impacts how fast your queries run, how much memory is used, and how scalable your application is. Unlike relational databases, MongoDB gives you a lot of flexibility, but with that comes responsibility.
 

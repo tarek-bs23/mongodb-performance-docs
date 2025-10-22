@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "8. Advanced topics"
-nav_order: 8
+title: "9. Advanced topics"
+nav_order: 9
 ---
 
-# 8. Advanced Topics
+# 9. Advanced Topics
 
 Once your MongoDB setup is running smoothly, and you’ve nailed the basics, it’s time to look at some advanced topics that can make or break performance at scale. These are things I’ve had to deal with in real-world projects especially when working with large datasets, high traffic, or distributed systems.
 
