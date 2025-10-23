@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "7. Aggregation optimization"
+title: "Aggregation optimization"
 nav_order: 7
 ---
 
-# 7. Aggregation Pipeline Optimization
+# Aggregation Pipeline Optimization
 
 The aggregation pipeline is one of MongoDB's most powerful features but it can also be one of the easiest to misuse. If you're not careful with how you structure your pipeline, performance can tank fast, especially on large datasets.
 

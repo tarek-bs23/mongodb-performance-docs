@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "1. Database Structure Overview"
+title: "Database Structure Overview"
 nav_order: 1
 ---
 
-# 1. Database Structure Overview
+# Database Structure Overview
 
 This section documents the complete MongoDB schema design for the **TechHub E-Commerce Platform**, a simulated large-scale application used throughout this guide to demonstrate **query performance**, **schema design patterns**, and **real-world optimization techniques**.
 

@@ -9,56 +9,56 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 Explore the full MongoDB Performance documentation, including a browsable index of all topics, on the GitHub Pages site: [MongoDB Performance Docs](https://tarek-bs23.github.io/mongodb-performance-docs/)
 
 
-1. [Database Structure Overview](./docs/01-database-structure-overview.md)
+- [Database Structure Overview](./docs/01-database-structure-overview.md)
    - Collections and Documents
    - Schema Relationships Overview
    - Dataset Size Plan
    - Data Seeding Guideline
 
-2. [Introduction](./docs/02-introduction.md)
+- [Introduction](./docs/02-introduction.md)
    - What is MongoDB query performance?
    - Why Performance Matters
    - Overview of Tools and Techniques
 
-3. [Monitoring and Profiling](./docs/03-monitoring-and-profiling.md)
+- [Monitoring and Profiling](./docs/03-monitoring-and-profiling.md)
    - Using `explain()` and Interpreting Output
    - MongoDB Compass Performance Tab
    - Query Profiler and Logs
    - Performance Advisor
 
-4. [MongoDB Internals](./docs/04-mongodb-internals.md)
+- [MongoDB Internals](./docs/04-mongodb-internals.md)
    - How MongoDB Stores Data (BSON, Documents, Collections)
    - Storage Engine Basics (WiredTiger)
    - How MongoDB Executes Queries
    - Query Planner and Execution Stages
 
-5. [Indexing Strategies](./docs/05-indexing-strategies.md)
+- [Indexing Strategies](./docs/05-indexing-strategies.md)
    - Types of Indexes
    - Compound Index (with ESR Rule)
    - Covered Queries
    - Index Selection and Cardinality
    - Indexing Best Practices
 
-6. [Query Optimization](./docs/06-query-optimization.md)
+- [Query Optimization](./docs/06-query-optimization.md)
    - Optimizing Read Queries
    - Avoiding Common Anti-Patterns
    - Pagination Strategies
    - Projection and Filtering
 
-7. [Aggregation Optimization](./docs/07-aggregation-optimization.md)
+- [Aggregation Optimization](./docs/07-aggregation-optimization.md)
    - Pipeline stage ordering
    - Performance Tips for Aggregation Operators
    - Memory Usage and Optimization
    - Pipeline Optimization Strategies
    - `$facet`, `$bucket`, and `$lookup` Considerations
 
-8. [Schema Design](./docs/08-schema-design.md)
+- [Schema Design](./docs/08-schema-design.md)
    - Embedding vs referencing
    - Document Size and Nesting
    - Schema Evolution and Query Impact
    - Query-Driven Schema Design
 
-9. [Case Studies](./docs/09-case-studies.md)
+- [Case Studies](./docs/09-case-studies.md)
     - Performance Note 
     - Real-world Optimization Examples
 

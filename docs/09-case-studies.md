@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "09. Case studies"
-nav_order: 09
+title: "Case studies"
+nav_order: 9
 ---
 
-# 9. Case Studies and Real-World Examples
+# Case Studies and Real-World Examples
 
 This section covers real scenarios where MongoDB performance was improved through query and schema optimization. These are based on actual issues in production e-commerce applications. I'll walk through before/after cases, show metrics, and share what I learned the hard way.
 
