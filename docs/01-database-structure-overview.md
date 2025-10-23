@@ -259,7 +259,7 @@ To populate your local MongoDB database with sample data for the **TechHub E-Com
 ### Prerequisites
 Before running the seeding script, ensure the following are installed and configured:
 - **MongoDB**: Version 7.0 or higher, with a running local instance (e.g., `mongod`). [Install MongoDB](https://www.mongodb.com/docs/manual/installation/).
-- **Node.js**: Version .x or higher. [Download Node.js](https://nodejs.org/).
+- **Node.js**: Version 18.x or higher. [Download Node.js](https://nodejs.org/).
 - **Git**: Required to clone the repository. [Install Git](https://git-scm.com/downloads).
 - A terminal or command-line interface (e.g., Bash, PowerShell, or Terminal).
 - Ensure your MongoDB instance is running and accessible at `mongodb://localhost:27017`.
@@ -293,7 +293,7 @@ Before running the seeding script, ensure the following are installed and config
    ```
 
 ### Performance Considerations
-Seeding large collections like `userActivity` (20M+ records) and `logs` (50M+ records) requires significant disk space (approximately 10-20 GB) and may take 30-40 minutes depending on your hardware. Ensure sufficient disk space and CPU resources.
+Seeding large collections like `userActivity` (20M+ records) and `logs` (50M+ records) requires significant disk space (approximately 25-35 GB) and may take 20-30 minutes depending on your hardware. Ensure sufficient disk space and CPU resources.
 
 ### Notes
 - The seeding script generates approximately 1M users, 10M orders, 100K products, and other records as outlined in the [Dataset Size Plan](#dataset-size-plan).
