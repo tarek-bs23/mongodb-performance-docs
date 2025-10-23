@@ -94,11 +94,9 @@ const SEED_CONFIG = {
     NUM_USERS: 1_000_000,
     NUM_PRODUCTS: 100_000,
     NUM_ORDERS: 10_000_000,
-    NUM_USER_ACTIVITY: 20_000_000,
     NUM_BLOG_POSTS: 100_000,
     NUM_COMMENTS: 2_500_000,
     NUM_PLACES: 5_000,
-    NUM_LOGS: 50_000_000,
 };
 
 // ============================
@@ -288,40 +286,6 @@ function printProgress(prefix, current, total) {
     console.log("✅ Orders generation complete!\n");
 
     // ----------------------------
-    // 📊 Generate User Activity
-    // ----------------------------
-    console.log("📊 Generating user activity...");
-    const activityBatch = [];
-    const batchSizeActivity = 10_000;
-    const actions = ["login", "logout", "view_product", "add_to_cart", "purchase", "search"];
-
-    for (let i = 0; i < SEED_CONFIG.NUM_USER_ACTIVITY; i++) {
-        const user = randomFromArray(customers);
-        activityBatch.push({
-            _id: new ObjectId(),
-            userId: user._id,
-            sessionId: faker.string.uuid(),
-            action: randomFromArray(actions),
-            metadata: {
-                productId: randomFromArray(products)._id,
-                searchQuery: faker.commerce.productName(),
-                page: faker.internet.url(),
-                ipAddress: faker.internet.ip(),
-                userAgent: faker.internet.userAgent()
-            },
-            timestamp: faker.date.recent(90)
-        });
-
-        if (activityBatch.length >= batchSizeActivity) {
-            await db.collection("userActivity").insertMany(activityBatch);
-            activityBatch.length = 0;
-            printProgress("⏳ User Activity", i + 1, SEED_CONFIG.NUM_USER_ACTIVITY);
-        }
-    }
-    if (activityBatch.length) await db.collection("userActivity").insertMany(activityBatch);
-    console.log("✅ User Activity generation complete!\n");
-
-    // ----------------------------
     // 📝 Blog Posts
     // ----------------------------
     console.log("📝 Generating blog posts...");
@@ -417,38 +381,6 @@ function printProgress(prefix, current, total) {
 
     await db.collection("places").insertMany(placesBatch);
     console.log("✅ Places generation complete!\n");
-
-    // ----------------------------
-    // 🗂 Logs
-    // ----------------------------
-    console.log("🗂 Generating logs...");
-    const logsBatch = [];
-    const batchSizeLogs = 5_000;
-    const services = ["api", "payment", "shipping", "auth"];
-    const levels = ["info", "warning", "error", "critical"];
-    const regions = ["us-east", "us-west", "eu", "asia"];
-
-    for (let i = 0; i < SEED_CONFIG.NUM_LOGS; i++) {
-        logsBatch.push({
-            _id: new ObjectId(),
-            level: randomFromArray(levels),
-            message: faker.lorem.sentence(),
-            service: randomFromArray(services),
-            userId: randomFromArray(customers)._id,
-            metadata: {extra: faker.lorem.words(3)},
-            timestamp: faker.date.recent(90),
-            region: randomFromArray(regions)
-        });
-
-        if (logsBatch.length >= batchSizeLogs) {
-            await db.collection("logs").insertMany(logsBatch);
-            logsBatch.length = 0;
-            printProgress("⏳ Logs", i + 1, SEED_CONFIG.NUM_LOGS);
-        }
-    }
-
-    if (logsBatch.length) await db.collection("logs").insertMany(logsBatch);
-    console.log("✅ Logs generation complete!\n");
 
     // ----------------------------
     // 🎉 Done

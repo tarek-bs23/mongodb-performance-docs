@@ -61,13 +61,7 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
    - Schema evolution strategies
    - Performance-oriented schema design
 
-9. [Advanced Topics](./09-advanced-topics.md)
-   - Sharding and performance
-   - Caching strategies
-   - Query plan caching
-   - Working with large datasets
-
-10. [Case Studies](./10-case-studies.md)
+9. [Case Studies](./09-case-studies.md)
     - Real-world optimization examples
     - Performance benchmarks
     - Best practices implementation

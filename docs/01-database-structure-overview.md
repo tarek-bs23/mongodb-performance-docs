@@ -120,28 +120,7 @@ Stores product details such as name, category, price, stock, and specs. Central 
 }
 ```
 
-### 🧭 **4. User Activity Collection**
-
-Tracks user actions for analytics, personalization, and auditing. Designed for high-write, append-only workloads.
-
-```js
-{
-  _id: ObjectId(),
-  userId: ObjectId(),        // references users._id
-  sessionId: String,
-  action: String,            // "login", "view_product", "purchase", etc.
-  metadata: {
-    productId: ObjectId(),
-    searchQuery: String,
-    page: String,
-    ipAddress: String,
-    userAgent: String
-  },
-  timestamp: Date
-}
-```
-
-### 📝 **5. Blog Posts Collection**
+### 📝 **4. Blog Posts Collection**
 
 Stores educational and marketing articles created by admins or vendors. Useful for displaying blog or knowledge base content in the platform.
 
@@ -161,7 +140,7 @@ Stores educational and marketing articles created by admins or vendors. Useful f
 }
 ```
 
-### 💬 **6. Comments Collection**
+### 💬 **5. Comments Collection**
 
 Stores user comments related to blog posts. Kept in a separate collection for better scalability and data organization.
 
@@ -179,7 +158,7 @@ Stores user comments related to blog posts. Kept in a separate collection for be
 }
 ```
 
-### 🏬 **7. Places Collection**
+### 🏬 **6. Places Collection**
 
 Represents physical business locations such as stores, warehouses, and pickup points.
 
@@ -206,34 +185,21 @@ Represents physical business locations such as stores, warehouses, and pickup po
 }
 ```
 
-### ⚙️ **8. Logs Collection**
-
-Captures detailed application-level events for performance monitoring and debugging.
-
-```js
-{
-  _id: ObjectId(),
-  level: String,             // "info", "warning", "error", "critical"
-  message: String,
-  service: String,           // "api", "auth", "payment", "shipping"
-  userId: ObjectId(),        // optional reference to users._id
-  metadata: Object,
-  timestamp: Date,
-  region: String             // "us-east", "eu", "asia", etc.
-}
-```
-
 ---
 
 ## 🧩 **Schema Relationships Overview**
 
-| Relationship Type | Example Collections                             | Description                               |
-| ----------------- | ----------------------------------------------- | ----------------------------------------- |
-| **1 → 1**         | `users` → `preferences`                         | Embedded subdocument                      |
-| **1 → Many**      | `users` → `orders`, `blogPosts`, `userActivity` | Referenced relationships                  |
-| **Many → 1**      | `orders.items` → `products`                     | Multiple items reference a single product |
-| **Many → Many**   | `products` ↔ `tags`, `blogPosts` ↔ `tags`       | Represented as arrays of strings          |
-| **Hierarchical**  | `comments` with `parentCommentId`               | Recursive relationships                   |
+| Relationship Type    | Example Collections                            | Description                                                             |
+| -------------------- | ---------------------------------------------- | ----------------------------------------------------------------------- |
+| **1 → 1**            | `users` → `preferences`                        | Embedded subdocument within the user.                                   |
+| **1 → Many**         | `users` → `orders`, `users` → `blogPosts`      | Each user can have multiple orders and blog posts.                      |
+| **Many → 1**         | `orders.items.productId` → `products._id`      | Multiple order items reference a single product.                        |
+| **Many → Many**      | `products.tags` ↔ `blogPosts.tags`             | Tags are represented as arrays of strings for flexible categorization.  |
+| **Hierarchical**     | `comments.parentCommentId` → `comments._id`    | Recursive relationship allows threaded/nested comments.                 |
+| **1 → 1 (optional)** | `orders.customerId` → `users._id`              | Each order belongs to one customer.                                     |
+| **1 → Many**         | `places` → `orders.shippingAddress` (optional) | Optional association if you track orders shipped from a specific place. |
+| **1 → 1 (optional)** | `blogPosts.authorId` → `users._id`             | Each blog post is authored by one admin or vendor.                      |
+                |
 
 ---
 
@@ -244,11 +210,9 @@ Captures detailed application-level events for performance monitoring and debugg
 | `users`        | 1,000,000         | Mix of customers, vendors, admins |
 | `products`     | 100,000          | Electronics, accessories, etc.    |
 | `orders`       | 10,000,000       | Linked to users and products      |
-| `userActivity` | 20,000,000      | High-volume analytics data        |
 | `blogPosts`    | 100,000           | Authored by admins/vendors        |
 | `comments`     | 2,500,000          | User interactions                 |
 | `places`       | 5,000             | Store and warehouse locations     |
-| `logs`         | 50,000,000    | System and application logs       |
 
 --- 
 
