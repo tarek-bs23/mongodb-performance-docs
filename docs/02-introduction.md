@@ -30,14 +30,15 @@ In MongoDB, performance is influenced by:
 
 Let’s take a real-world example.
 
-We had a collection with around **2 million documents** representing e-commerce orders.
+We had a collection with around **10 million documents** representing e-commerce orders.
 A simple query like this:
 
 ```js
-db.orders.find({ customerId: "12345" })
+db.orders.find({customerId: ObjectId('68f9dec81c054beae4aab0f3')}) 
+// the ObjectId may vary on your local machine
 ```
 
-was taking over **1 second** to return results. Why?
+was taking over **3 second** to return results. Why?
 There was **no index** on `customerId`, so MongoDB had to **scan every document** in the collection every single time.
 
 After adding an index:
@@ -46,7 +47,8 @@ After adding an index:
 db.orders.createIndex({ customerId: 1 })
 ```
 
-The same query dropped to **under 10ms**. That’s a **100x improvement** with just one line of code.
+The same query dropped to **under 1ms**. That’s a **300x improvement** with just one line of code. 
+***Note**: This is a simplified example based on our specific MongoDB design. In real-world scenarios, such dramatic improvements may not always be achievable. Actual performance depends on factors like hardware, data distribution, query patterns, and overall system architecture.*
 
 Now imagine this query is part of an API endpoint that gets hit **thousands of times per minute**, that’s the difference between a smooth user experience and a system meltdown.
 
