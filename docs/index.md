@@ -59,12 +59,10 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 8. [Schema Design](./08-schema-design.md)
    - Embedding vs referencing
-   - Document size and nesting
-   - Schema evolution strategies
-   - Performance-oriented schema design
+   - Document Size and Nesting
+   - Schema Evolution and Query Impact
+   - Query-Driven Schema Design
 
 9. [Case Studies](./09-case-studies.md)
-    - Real-world optimization examples
-    - Performance benchmarks
-    - Best practices implementation
-    - Lessons learned
+    - Performance Note 
+    - Real-world Optimization Examples
