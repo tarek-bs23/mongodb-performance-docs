@@ -547,7 +547,7 @@ db.blogPosts.createIndex({ status: 1, category: 1, publishedAt: -1 })
 
 ## ✅ Summary
 
-* MongoDB supports several index types - single field, compound, multikey, text, and geospatial, each optimized for specific query patterns.
+* MongoDB supports several index types: single field, compound, multikey, text, and geospatial, each optimized for specific query patterns.
 * Use **compound indexes** wisely and in the correct order for multi-field queries.
 * Aim for **covered queries** whenever possible for blazing-fast lookups.
 * Balance between read performance and write cost **too many indexes** can slow down inserts and updates.
