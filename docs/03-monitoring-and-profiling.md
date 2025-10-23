@@ -15,7 +15,6 @@ When you're trying to figure out why a MongoDB query is slow, you need more than
 This is your first line of defense when debugging a slow query.
 
 ```js
-
 db.orders.find({ customerId: ObjectId("68f9debd1c054beae4a21226") })).explain("executionStats")
 ```
 

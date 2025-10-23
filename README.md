@@ -6,52 +6,60 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 ## 📚 Topics Covered
 
-1. [Introduction](./01-introduction.md)
+For a browsable index, see the docs homepage: [docs/index.md](./docs/index.md)
+
+1. [Database Structure Overview](./docs/01-database-structure-overview.md)
+   - Collections and Documents
+   - Schema Relationships Overview
+   - Dataset Size Plan
+   - Data Seeding Guideline
+
+2. [Introduction](./docs/02-introduction.md)
    - What is MongoDB query performance?
-   - Importance of query performance
-   - Overview of MongoDB architecture
+   - Why Performance Matters
+   - Overview of Tools and Techniques
 
-2. [Understanding MongoDB Internals](./02-mongodb-internals.md)
-   - How MongoDB Stores Data (BSON, Documents, Collections).
-   - How MongoDB executes queries
-   - Query planner and execution stages
-   - Storage engine basics (WiredTiger)
+3. [Monitoring and Profiling](./docs/03-monitoring-and-profiling.md)
+   - Using `explain()` and Interpreting Output
+   - MongoDB Compass Performance Tab
+   - Query Profiler and Logs
+   - Performance Advisor
 
-3. [Monitoring and Profiling Tools](./03-monitoring-and-profiling.md)
-   - Using `explain()` and interpreting output
-   - MongoDB Compass performance tab
-   - Query profiler and logs
+4. [MongoDB Internals](./docs/04-mongodb-internals.md)
+   - How MongoDB Stores Data (BSON, Documents, Collections)
+   - Storage Engine Basics (WiredTiger)
+   - How MongoDB Executes Queries
+   - Query Planner and Execution Stages
 
-4. [Indexing Strategies](./04-indexing-strategies.md)
-   - Types of indexes: single, compound, multikey, text, geo
-   - Covered queries and index cardinality
-   - Indexing best practices
+5. [Indexing Strategies](./docs/05-indexing-strategies.md)
+   - Types of Indexes
+   - Compound Index (with ESR Rule)
+   - Covered Queries
+   - Index Selection and Cardinality
+   - Indexing Best Practices
 
-5. [Query Optimization Techniques](./05-query-optimization.md)
-   - Efficient query patterns
-   - Avoiding anti-patterns (`$where`, `$regex`, `$in`)
-   - Pagination strategies (`skip` vs range queries)
-   - Projection and filtering
+6. [Query Optimization](./docs/06-query-optimization.md)
+   - Optimizing Read Queries
+   - Avoiding Common Anti-Patterns
+   - Pagination Strategies
+   - Projection and Filtering
 
-6. [Aggregation Pipeline Optimization](./06-aggregation-optimization.md)
+7. [Aggregation Optimization](./docs/07-aggregation-optimization.md)
    - Pipeline stage ordering
-   - Performance tips for `$match`, `$project`, `$group`
-   - `$facet`, `$bucket`, and `$lookup` considerations
+   - Performance Tips for Aggregation Operators
+   - Memory Usage and Optimization
+   - Pipeline Optimization Strategies
+   - `$facet`, `$bucket`, and `$lookup` Considerations
 
-7. [Schema Design for Performance](./07-schema-design.md)
+8. [Schema Design](./docs/08-schema-design.md)
    - Embedding vs referencing
-   - Document size and nesting
-   - Schema evolution and impact on queries
+   - Document Size and Nesting
+   - Schema Evolution and Query Impact
+   - Query-Driven Schema Design
 
-8. [Advanced Topics](./08-advanced-topics.md)
-   - Sharding and performance
-   - Caching strategies
-   - Query plan caching
-   - Working with large datasets
-
-9. [Case Studies and Real-World Examples](./09-case-studies.md)
-   - Before/after optimization examples
-   - Metrics comparison and lessons learned
+9. [Case Studies](./docs/09-case-studies.md)
+    - Performance Note 
+    - Real-world Optimization Examples
 
 ---
 
@@ -59,15 +67,4 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 - MongoDB (local installation)
 - MongoDB Compass (optional)
-
-<!-- ---
-
-## 📦 Sample Dataset
-
-A synthetic e-commerce dataset is included in the `data/` folder. Import it using:
-
-```bash
-mongoimport --db ecommerce --collection orders --file ./data/orders-sample.json --jsonArray 
-```
-
--->
+- Node.js
