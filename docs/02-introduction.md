@@ -48,7 +48,7 @@ db.orders.createIndex({ customerId: 1 })
 ```
 
 The same query dropped to **under 10ms**. That’s a **300x improvement** with just one line of code. 
->**⚠️ Note**: This is a simplified example based on our specific MongoDB design. In real-world scenarios, such dramatic improvements may not always be achievable. Actual performance depends on factors like hardware, data distribution, query patterns, and overall system architecture.*
+>**⚠️ Note**: This is a simplified example based on our specific MongoDB design. In real-world scenarios, such dramatic improvements may not always be achievable. Actual performance depends on factors like hardware, data distribution, query patterns, and overall system architecture.
 
 Now imagine this query is part of an API endpoint that gets hit **thousands of times per minute**, that’s the difference between a smooth user experience and a system meltdown.
 

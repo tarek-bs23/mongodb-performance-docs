@@ -257,7 +257,7 @@ Before running the seeding script, ensure the following are installed and config
    ```
 
 ### Performance Considerations
-Seeding large collections like `orders` (10M records) and `comments` (2.5M records) requires significant disk space (approximately 7-10 GB) and may take 20-30 minutes depending on your hardware. Ensure sufficient disk space and CPU resources.
+Seeding large collections like `orders` (10M records) and `comments` (2.5M records) requires significant disk space (approximately 7-10 GB) and may take 10-20 minutes depending on your hardware. Ensure sufficient disk space and CPU resources.
 
 ### Notes
 - The seeding script generates approximately 1M users, 10M orders, 100K products, and other records as outlined in the [Dataset Size Plan](#dataset-size-plan).
