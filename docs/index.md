@@ -52,9 +52,10 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 7. [Aggregation Optimization](./07-aggregation-optimization.md)
    - Pipeline stage ordering
-   - Performance tips for aggregation operators
-   - Memory usage and optimization
-   - Pipeline optimization strategies
+   - Performance Tips for Aggregation Operators
+   - Memory Usage and Optimization
+   - Pipeline Optimization Strategies
+   - `$facet`, `$bucket`, and `$lookup` Considerations
 
 8. [Schema Design](./08-schema-design.md)
    - Embedding vs referencing
