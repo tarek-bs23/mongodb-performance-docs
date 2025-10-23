@@ -34,9 +34,9 @@ We had a collection with around **10 million documents** representing e-commerce
 A simple query like this:
 
 ```js
-db.orders.find({customerId: ObjectId('68f9dec81c054beae4aab0f3')}) 
-// the ObjectId may vary on your local machine
+db.orders.find({ customerId: ObjectId("68f9debd1c054beae4a21226") })
 ```
+>**Note**: The ObjectId will be different on your machine
 
 was taking over **3 second** to return results. Why?
 There was **no index** on `customerId`, so MongoDB had to **scan every document** in the collection every single time.
@@ -47,8 +47,8 @@ After adding an index:
 db.orders.createIndex({ customerId: 1 })
 ```
 
-The same query dropped to **under 1ms**. That’s a **300x improvement** with just one line of code. 
-***Note**: This is a simplified example based on our specific MongoDB design. In real-world scenarios, such dramatic improvements may not always be achievable. Actual performance depends on factors like hardware, data distribution, query patterns, and overall system architecture.*
+The same query dropped to **under 10ms**. That’s a **300x improvement** with just one line of code. 
+>**Note**: This is a simplified example based on our specific MongoDB design. In real-world scenarios, such dramatic improvements may not always be achievable. Actual performance depends on factors like hardware, data distribution, query patterns, and overall system architecture.*
 
 Now imagine this query is part of an API endpoint that gets hit **thousands of times per minute**, that’s the difference between a smooth user experience and a system meltdown.
 
@@ -80,3 +80,5 @@ You’ll learn how to use all of these throughout this guide with **real example
 - Understanding how MongoDB works under the hood is key to writing fast, scalable queries.
 
 This section lays the foundation for practical performance tuning with real examples and measurable improvements.
+
+> **Note**: All examples provided in this document are based on our custom-seeded MongoDB dataset. Your results may differ depending on the data populated using the provided script, as the structure and values may vary.

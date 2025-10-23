@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "3. MongoDB Internals"
-nav_order: 3
+title: "4. MongoDB Internals"
+nav_order: 4
 ---
 
-# 3. Understanding MongoDB Internals
+# 4. Understanding MongoDB Internals
 
 This section explains how MongoDB works under the hood how it stores data, executes queries, and manages memory and disk through its storage engine. Knowing this helps you write smarter queries and design better schemas that actually perform well in production.
 
@@ -26,32 +26,62 @@ Think of BSON as **“JSON, but made for performance.”**
 
 ##### Example:
 
-```javascript
+```js
 // What you write in JavaScript:
 const user = {
   _id: ObjectId("507f1f77bcf86cd799439011"),
-  name: "Alice",
   email: "alice@example.com",
-  age: 30,
-  profile: {
-    title: "Software Engineer",
-    department: "engineering"
+  password: "$2b$10$hashed_password_string", // Hashed
+  firstName: "Alice",
+  lastName: "Johnson",
+  role: "customer",
+  status: "active",
+  address: {
+    street: "123 Main St",
+    city: "San Francisco",
+    state: "CA",
+    country: "USA",
+    zipCode: "94105",
+    location: {
+      type: "Point",
+      coordinates: [-122.4194, 37.7749] // [longitude, latitude]
+    }
   },
-  skills: ["javascript", "nodejs", "mongodb"],
-  createdAt: new Date("2024-01-15"),
-  status: "active"
+  phone: "+1-555-0123",
+  createdAt: new Date("2024-01-15T10:30:00Z"),
+  lastLogin: new Date("2024-03-20T14:22:00Z"),
+  preferences: {
+    language: "en",
+    currency: "USD",
+    notifications: true
+  }
 }
 
 // How MongoDB actually stores it (conceptually):
 <BSON Document>:
   - _id: ObjectId (12 bytes)
-  - name: String (5 bytes + "Alice")
   - email: String (16 bytes + "alice@example.com")
-  - age: Int32 (4 bytes + value 30)
-  - profile: Embedded Document (nested BSON)
-  - skills: Array (overhead + three strings)
-  - createdAt: Date (8 bytes + timestamp)
+  - password: String (28 bytes + hashed value)
+  - firstName: String (5 bytes + "Alice")
+  - lastName: String (8 bytes + "Johnson")
+  - role: String (8 bytes + "customer")
   - status: String (6 bytes + "active")
+  - address: Embedded Document (nested BSON):
+    ├─ street: String (11 bytes + "123 Main St")
+    ├─ city: String (13 bytes + "San Francisco")
+    ├─ state: String (2 bytes + "CA")
+    ├─ country: String (3 bytes + "USA")
+    ├─ zipCode: String (5 bytes + "94105")
+    └─ location: Embedded Document:
+        ├─ type: String (4 bytes + "Point")
+        └─ coordinates: Array (overhead + two Double values)
+  - phone: String (12 bytes + "+1-555-0123")
+  - createdAt: Date (8 bytes + timestamp)
+  - lastLogin: Date (8 bytes + timestamp)
+  - preferences: Embedded Document:
+    ├─ language: String (2 bytes + "en")
+    ├─ currency: String (3 bytes + "USD")
+    └─ notifications: Boolean (1 byte + true)
 ```
 
 This document is stored internally as BSON, making it fast to query and index.
@@ -64,24 +94,34 @@ This document is stored internally as BSON, making it fast to query and index.
 A **document** is the basic unit of data in MongoDB similar to a row in SQL, but much more flexible. Each document is a self-contained object with fields and values, and structures can vary across documents within the same collection.
 
 Example document in a `users` collection: 
-```javascript
+```json
 {
   _id: ObjectId("507f1f77bcf86cd799439011"),
   email: "alice@example.com",
-  name: "Alice Smith",
-  profile: {
-    title: "Senior Software Engineer",
-    department: "engineering",
-    level: "IC4"
+  password: "$2b$10$hashed_password_string_here",
+  firstName: "Alice",
+  lastName: "Smith",
+  role: "customer",
+  status: "active",
+  address: {
+    street: "123 Tech Street",
+    city: "San Francisco",
+    state: "CA",
+    country: "USA",
+    zipCode: "94105",
+    location: {
+      type: "Point",
+      coordinates: [-122.4194, 37.7749]
+    }
   },
-  skills: ["javascript", "nodejs", "mongodb", "react"],
-  employment: {
-    hireDate: ISODate("2022-03-15T00:00:00Z"),
-    status: "active",
-    type: "full_time"
-  },
+  phone: "+1-555-0123",
   createdAt: ISODate("2024-01-15T10:30:00Z"),
-  lastLogin: ISODate("2024-01-20T14:22:00Z")
+  lastLogin: ISODate("2024-03-20T14:22:00Z"),
+  preferences: {
+    language: "en",
+    currency: "USD",
+    notifications: true
+  }
 }
 ```
 
@@ -101,55 +141,96 @@ A **collection** is a group of related documents like a table in SQL, but withou
 
 Example:
 
-```javascript
+```json
 // A 'users' collection might contain documents like:
 
-// Document 1 - Engineering lead
+// Document 1 - Customer
 {
   _id: ObjectId("507f1f77bcf86cd799439011"),
   email: "alice@example.com",
-  name: "Alice Smith",
-  profile: {
-    title: "Engineering Manager",
-    department: "engineering"
+  password: "$2a$10$hashedPasswordHere", // Hashed password
+  firstName: "Alice",
+  lastName: "Smith",
+  role: "customer",
+  status: "active",
+  address: {
+    street: "123 Main St",
+    city: "New York",
+    state: "NY",
+    country: "USA",
+    zipCode: "10001",
+    location: {
+      type: "Point",
+      coordinates: [-73.9857, 40.7484] // [longitude, latitude]
+    }
   },
-  employment: {
-    hireDate: ISODate("2020-06-01T00:00:00Z"),
-    status: "active"
+  phone: "+1-555-123-4567",
+  createdAt: ISODate("2024-01-15T10:00:00Z"),
+  lastLogin: ISODate("2025-10-20T08:30:00Z"),
+  preferences: {
+    language: "en",
+    currency: "USD",
+    notifications: true
   }
 }
 
-// Document 2 - Individual contributor  
+// Document 2 - Vendor
 {
   _id: ObjectId("507f1f77bcf86cd799439012"),
-  email: "bob@example.com", 
-  name: "Bob Johnson",
-  profile: {
-    title: "Senior Software Engineer",
-    department: "engineering",
-    level: "IC4"
+  email: "bob@example.com",
+  password: "$2a$10$anotherHashedPassword", // Hashed password
+  firstName: "Bob",
+  lastName: "Johnson",
+  role: "vendor",
+  status: "active",
+  address: {
+    street: "456 Market St",
+    city: "San Francisco",
+    state: "CA",
+    country: "USA",
+    zipCode: "94105",
+    location: {
+      type: "Point",
+      coordinates: [-122.4194, 37.7749] // [longitude, latitude]
+    }
   },
-  skills: ["python", "docker", "aws"],
-  employment: {
-    hireDate: ISODate("2021-09-15T00:00:00Z"),
-    status: "active",
-    manager_id: ObjectId("507f1f77bcf86cd799439011")
+  phone: "+1-555-987-6543",
+  createdAt: ISODate("2023-09-15T12:00:00Z"),
+  lastLogin: ISODate("2025-10-19T15:45:00Z"),
+  preferences: {
+    language: "en",
+    currency: "USD",
+    notifications: false
   }
 }
 
-// Document 3 - Different department, different fields
+// Document 3 - Admin with different preferences
 {
   _id: ObjectId("507f1f77bcf86cd799439013"),
   email: "carol@example.com",
-  name: "Carol Davis", 
-  profile: {
-    title: "Product Manager",
-    department: "product",
-    portfolio: ["mobile", "web-platform"]
+  password: "$2a$10$yetAnotherHashedPassword", // Hashed password
+  firstName: "Carol",
+  lastName: "Davis",
+  role: "admin",
+  status: "active",
+  address: {
+    street: "789 King St",
+    city: "Toronto",
+    state: "ON",
+    country: "Canada",
+    zipCode: "M5V 1J2",
+    location: {
+      type: "Point",
+      coordinates: [-79.3832, 43.6532] // [longitude, latitude]
+    }
   },
-  employment: {
-    hireDate: ISODate("2023-01-10T00:00:00Z"),
-    status: "active"
+  phone: "+1-416-555-4321",
+  createdAt: ISODate("2023-01-10T09:00:00Z"),
+  lastLogin: ISODate("2025-10-18T10:15:00Z"),
+  preferences: {
+    language: "fr",
+    currency: "CAD",
+    notifications: true
   }
 }
 ```
@@ -204,7 +285,7 @@ This is why **having a working set that fits in RAM** is crucial for performance
 
 You can monitor cache usage with:
 
-```javascript
+```js
 // Monitor cache usage
 db.serverStatus().wiredTiger.cache
 
@@ -219,20 +300,23 @@ db.serverStatus().wiredTiger.cache
 
 ### Real Example: Cache Impact on Query Performance
 
-```javascript
-// Query: Find active engineering users
+```js
+// Query: Find active customers in California with recent login
 db.users.find({
-  "profile.department": "engineering",
-  "employment.status": "active"
+  "role": "customer",
+  "status": "active", 
+  "address.state": "CA",
+  "lastLogin": { $gte: ISODate("2024-03-01T00:00:00Z") }
 })
 ```
 
-| Scenario                | Execution Time | Source    |
-|------------------------|---------------|-----------|
-| **With data in cache** | ~5 ms         | Memory    |
-| **With data on disk**  | ~50 ms        | Disk I/O  |
+| Scenario                | Execution Time | Source    | Notes |
+|------------------------|---------------|-----------|-------|
+| **With data in cache** | ~3 ms         | Memory (WiredTiger Cache) | Data loaded in RAM from previous queries |
+| **With data on disk**  | ~45 ms        | Disk I/O  | Requires reading from storage, populating cache |
 
 ---
+
 
 
 ## ⚙️ How MongoDB Executes Queries
@@ -251,13 +335,14 @@ Let's break down what happens at each stage with our `users` collection example.
 
 The parser validates your query syntax and converts it into an internal representation.
 
-```javascript
-// query
+```js
+// Query: Find active customers in California who logged in recently
 db.users.find({
-  "profile.department": "engineering",
-  "employment.status": "active", 
-  "profile.level": "IC4"
-}).sort({ "employment.hireDate": -1 }).limit(10)=
+  "role": "customer",
+  "status": "active",
+  "address.state": "CA", 
+  "lastLogin": { $gte: ISODate("2024-03-01T00:00:00Z") }
+}).sort({ "lastLogin": -1 }).limit(20)
 ```
 The parser checks:
 - Is the JSON valid?
@@ -275,72 +360,76 @@ This is where the magic happens. The optimizer acts like a smart GPS that consid
 Let's break down how the optimizer evaluates the query:
 
 **Query:**
-```javascript
+```js
 db.users.find({
-  "profile.department": "engineering",     // Equality filter
-  "employment.status": "active",           // Equality filter  
-  "profile.level": "IC4"                   // Equality filter
-}).sort({ "employment.hireDate": -1 })     // Sort requirement
+  "role": "customer",                    // Equality filter
+  "status": "active",                    // Equality filter  
+  "address.state": "CA",                 // Equality filter
+  "lastLogin": { $gte: ISODate("2024-03-01") }  // Range filter
+}).sort({ "lastLogin": -1 }).limit(20)   // Sort + limit
 ```
 
 **Available Indexes:**
-```javascript
-// Index 1: Covers department + status
-{ "profile.department": 1, "employment.status": 1 }
+```js
+// Index 1: Covers role + status + state
+{ "role": 1, "status": 1, "address.state": 1 }
 
-// Index 2: Covers level only  
-{ "profile.level": 1 }
+// Index 2: Covers role + lastLogin  
+{ "role": 1, "lastLogin": -1 }
 
-// Index 3: Covers department + sort field
-{ "profile.department": 1, "employment.hireDate": -1 }
+// Index 3: Covers status + lastLogin
+{ "status": 1, "lastLogin": -1 }
 
-// Index 4: Covers status + sort field
-{ "employment.status": 1, "employment.hireDate": -1 }
+// Index 4: Covers state only
+{ "address.state": 1 }
 ```
 
 **The Optimizer's Decision Matrix:**
 
 | Candidate Plan | Pros | Cons | Viability |
 |----------------|------|------|-----------|
-| **Index 1**<br/>`dept + status` | ✅ Handles 2 equality filters<br/>✅ Reduces dataset early | ❌ Still needs to sort<br/>❌ Must filter `level` manually | 🟢 **HIGH** |
-| **Index 3**<br/>`dept + hireDate` | ✅ Handles 1 equality + sort<br/>✅ No in-memory sort needed | ❌ Must filter `status` & `level`<br/>❌ May scan more documents | 🟡 **MEDIUM** |
-| **Index 2**<br/>`level only` | ✅ Handles 1 equality filter | ❌ Must filter `dept` & `status`<br/>❌ Requires in-memory sort | 🔴 **LOW** |
+| **Index 1**<br/>`role + status + state` | ✅ Handles 3 equality filters<br/>✅ Reduces dataset early | ❌ Still needs to filter `lastLogin`<br/>❌ Must sort in memory | 🟢 **HIGH** |
+| **Index 2**<br/>`role + lastLogin` | ✅ Handles equality + sort<br/>✅ Pre-sorted results<br/>✅ Efficient for limit | ❌ Must filter `status` & `state`<br/>❌ May scan more date range | 🟢 **HIGH** |
+| **Index 3**<br/>`status + lastLogin` | ✅ Handles equality + sort | ❌ Must filter `role` & `state`<br/>❌ Less selective | 🟡 **MEDIUM** |
 | **COLLSCAN**<br/>Full scan | ✅ Always works | ❌ Scans ALL documents<br/>❌ Slowest option | 🔴 **LAST RESORT** |
 
-**The Winner: Index 1** 🏆
+**The Winner: Index 2** 🏆
 
-**Why Index 1 Wins:**
-- Eliminates 90% of documents with two equality filters first
-- The remaining dataset is small enough that in-memory sort is cheap
-- Most selective approach for the query predicates
+**Why Index 2 Wins:**
+- Eliminates non-customer users immediately
+- Results are pre-sorted by lastLogin (descending)
+- Perfect for `limit(20)` - stops early
+- Only needs to filter status and state on small result set
 
 #### How to See the Optimization Process in Action
 
-```javascript
+```js
 // Get the full optimization story
 const explanation = db.users.explain("allPlansExecution").find({
-  "profile.department": "engineering",
-  "employment.status": "active", 
-  "profile.level": "IC4"
-}).sort({ "employment.hireDate": -1 }).limit(10)
+  "role": "customer",
+  "status": "active",
+  "address.state": "CA",
+  "lastLogin": { $gte: ISODate("2024-03-01T00:00:00Z") }
+}).sort({ "lastLogin": -1 }).limit(20)
 ```
 
 **What You'll See in the Output:**
 
-```javascript
+```js
 {
   "queryPlanner": {
     "winningPlan": {
       "stage": "FETCH",
       "filter": {
-        "profile.level": { "$eq": "IC4" }
+        "status": { "$eq": "active" },
+        "address.state": { "$eq": "CA" }
       },
       "inputStage": {
         "stage": "IXSCAN",
-        "indexName": "profile.department_1_employment.status_1",  // 🏆 Winner!
+        "indexName": "role_1_lastLogin_-1",  // 🏆 Winner!
         "keyPattern": {
-          "profile.department": 1,
-          "employment.status": 1
+          "role": 1,
+          "lastLogin": -1
         }
       }
     },
@@ -348,39 +437,42 @@ const explanation = db.users.explain("allPlansExecution").find({
       {
         "stage": "FETCH", 
         "filter": {
-          "employment.status": { "$eq": "active" },
-          "profile.level": { "$eq": "IC4" }
+          "lastLogin": { "$gte": ISODate("2024-03-01T00:00:00Z") }
         },
         "inputStage": {
           "stage": "IXSCAN",
-          "indexName": "profile.department_1_employment.hireDate_-1",  // Index 3
-          "reason": "Lost to better index for equality filters"
+          "indexName": "role_1_status_1_address.state_1",  // Index 1
+          "reason": "Lost due to in-memory sort requirement"
         }
       },
       {
-        "stage": "SORT",  // Required in-memory sort
+        "stage": "FETCH",
+        "filter": {
+          "role": { "$eq": "customer" },
+          "address.state": { "$eq": "CA" }
+        },
         "inputStage": {
           "stage": "IXSCAN", 
-          "indexName": "profile.level_1",  // Index 2
-          "reason": "Poor selectivity and requires sorting"
+          "indexName": "status_1_lastLogin_-1",  // Index 3
+          "reason": "Poor selectivity for status-only filter"
         }
       }
     ]
   },
   "executionStats": {
-    "nReturned": 8,
-    "executionTimeMillis": 12,
-    "totalKeysExamined": 142,
-    "totalDocsExamined": 142,
+    "nReturned": 20,
+    "executionTimeMillis": 8,
+    "totalKeysExamined": 35,
+    "totalDocsExamined": 35,
     "executionStages": {
       "stage": "FETCH",
-      "nReturned": 8,
-      "works": 143,
-      "advanced": 8,
+      "nReturned": 20,
+      "works": 36,
+      "advanced": 20,
       "inputStage": {
         "stage": "IXSCAN",
-        "nReturned": 142,
-        "works": 143
+        "nReturned": 35,
+        "works": 36
       }
     }
   }
@@ -389,12 +481,10 @@ const explanation = db.users.explain("allPlansExecution").find({
 
 **Key Insights from the Output:**
 
-- **`winningPlan`**: The chosen execution path (Index 1)
+- **`winningPlan`**: The chosen execution path (Index 2)
 - **`rejectedPlans`**: Other indexes that were tested but performed worse  
-- **`executionStats`**: Real performance metrics for the winning plan
-- **`nReturned` vs `totalDocsExamined`**: Efficiency ratio (8 results from 142 docs examined)
-
-**Pro Tip:** Look for large gaps between `nReturned` and `totalDocsExamined` - this indicates the query is examining many documents but returning few, which suggests index improvements are needed.
+- **`executionStats`**: Real performance metrics
+- **`nReturned` vs `totalDocsExamined`**: Efficiency ratio (20 results from 35 docs examined)
 
 This visualization helps you understand exactly why MongoDB chose a particular execution path and what alternatives were considered!
 
@@ -405,7 +495,7 @@ The execution engine carries out the chosen plan by combining different "stages"
 
 #### Common Execution Stages
 
-```javascript
+```js
 // Example execution plan for our query
 {
   "stage": "FETCH",
@@ -426,18 +516,18 @@ The execution engine carries out the chosen plan by combining different "stages"
 **Key Stages Explained:**
 
 - **`COLLSCAN`**: The boogeyman. Scans every document in the collection.
-  ```javascript
+  ```js
   "stage": "COLLSCAN"  // This is what you DON'T want to see
   ```
 
 - **`IXSCAN`**: The hero. Scans only the index entries.
-  ```javascript
+  ```js
   "stage": "IXSCAN",
   "indexName": "email_1"  // Using the email index
   ```
 
 - **`FETCH`**: Retrieves full documents after finding them via index.
-  ```javascript
+  ```js
   "stage": "FETCH",
   "inputStage": {
     "stage": "IXSCAN"  // IXSCAN finds pointers, FETCH gets the actual docs
@@ -445,7 +535,7 @@ The execution engine carries out the chosen plan by combining different "stages"
   ```
 
 - **`SORT`**: Sorts results in memory (can be expensive!).
-  ```javascript
+  ```js
   "stage": "SORT"  // Memory-intensive, especially for large result sets
   ```
 
@@ -466,13 +556,13 @@ What happens during a query:
 This is why your "working set" (frequently accessed data) should fit in RAM for optimal performance
 
 
-### Real Example: The Difference Between Good and Bad
+<!-- ### Real Example: The Difference Between Good and Bad
 
 Let's see two different execution paths for the same query.
 
 #### The Slow Way (Bad Plan)
 
-```javascript
+```js
 // Query: Find active engineering users at IC4 level, sorted by hire date
 db.users.find({
   "profile.department": "engineering",
@@ -502,7 +592,7 @@ Performance impact:
 
 #### The Fast Way (Good Plan)
 
-```javascript
+```js
 // Same query with proper index
 db.users.createIndex({ 
   "profile.department": 1, 
@@ -533,7 +623,7 @@ Performance benefits:
  - Results are already pre-sorted by hireDate (descending)
  - Only need to filter level on a small subset
  - Fast and efficient
-
+ -->
 
 ### Query Plan Caching – Learning from Experience
 
@@ -550,7 +640,7 @@ When Plans Get Evicted from Cache
 - Manual cache clear  
 
 **Force Re-optimization if Needed**
-```javascript
+```js
 db.users.find({...}).hint({ $natural: 1 })ers.find({...}).hint({ $natural: 1 })
 ```
 
@@ -576,11 +666,12 @@ Results Returned
 
 MongoDB's query planner evaluates multiple query plans and picks the best one based on cost (CPU, I/O, and memory). You can see this in action using:
 
-```javascript
-// Analyze query execution
+```js
+// Analyze query execution for active customers with recent activity
 db.users.find({
-  "profile.department": "engineering",
-  "employment.status": "active"
+  "role": "customer",
+  "status": "active",
+  "lastLogin": { $gte: ISODate("2024-03-01T00:00:00Z") }
 }).explain("executionStats")
 ```
 
@@ -591,20 +682,30 @@ This will show details such as:
 
 #### Example Output (Simplified)
 
-```javascript
+```js
 {
   "executionStats": {
-    "executionTimeMillis": 8,
-    "totalDocsExamined": 125,
-    "totalKeysExamined": 125,
-    "nReturned": 125,
+    "executionSuccess": true,
+    "nReturned": 3420,
+    "executionTimeMillis": 15,
+    "totalKeysExamined": 3450,
+    "totalDocsExamined": 3420,
     "executionStages": {
       "stage": "FETCH",
-      "nReturned": 125,
+      "nReturned": 3420,
+      "executionTimeMillisEstimate": 12,
+      "works": 3451,
+      "advanced": 3420,
       "inputStage": {
         "stage": "IXSCAN",
-        "indexName": "profile.department_1_employment.status_1",
-        "nReturned": 125
+        "nReturned": 3450,
+        "executionTimeMillisEstimate": 8,
+        "works": 3451,
+        "keyPattern": {
+          "role": 1,
+          "lastLogin": -1
+        },
+        "indexName": "role_1_lastLogin_-1"
       }
     }
   }
@@ -622,7 +723,7 @@ This tells us MongoDB used an **index scan** (`IXSCAN`) followed by a **fetch** 
 If your queries are slow even with proper indexes, your data might be **too large to fit in memory**. In that case, MongoDB has to read from disk more often-which is much slower and increases latency.
 
 **Check your working set:**
-```javascript
+```js
 // Monitor memory usage
 db.serverStatus().mem
 db.serverStatus().wiredTiger.cache

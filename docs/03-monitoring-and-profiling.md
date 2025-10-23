@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "4. Monitoring and profiling"
-nav_order: 4
+title: "3. Monitoring and profiling"
+nav_order: 3
 ---
 
-# 4. Monitoring and Profiling Tools
+# 3. Monitoring and Profiling Tools
 
 When you're trying to figure out why a MongoDB query is slow, you need more than just intuition, you need **visibility**. MongoDB gives us several tools to monitor, profile, and understand what’s happening under the hood.
 
@@ -15,7 +15,8 @@ When you're trying to figure out why a MongoDB query is slow, you need more than
 This is your first line of defense when debugging a slow query.
 
 ```js
-db.orders.find({ customerId: "12345" }).explain("executionStats")
+
+db.orders.find({ customerId: ObjectId("68f9debd1c054beae4a21226") })).explain("executionStats")
 ```
 
 This command shows how MongoDB plans to execute the query and what actually happened during execution.
@@ -49,29 +50,20 @@ Here’s a simplified example of what `explain("executionStats")` might return:
 ```json
 {
   "queryPlanner": {
-    "plannerVersion": 1,
-    "namespace": "ecommerce.orders",
-    "indexFilterSet": false,
-    "parsedQuery": {
-      "customerId": {
-        "$eq": "12345"
-      }
-    },
     "winningPlan": {
       "stage": "FETCH",
       "inputStage": {
         "stage": "IXSCAN",
         "indexName": "customerId_1",
-        "direction": "forward"
+        "keyPattern": { "customerId": 1 }
       }
     }
   },
   "executionStats": {
-    "executionSuccess": true,
-    "nReturned": 1,
-    "executionTimeMillis": 6,
-    "totalKeysExamined": 1,
-    "totalDocsExamined": 1
+    "nReturned": 25,
+    "executionTimeMillis": 10,
+    "totalKeysExamined": 25,
+    "totalDocsExamined": 25
   }
 }
 ```
@@ -79,8 +71,8 @@ Here’s a simplified example of what `explain("executionStats")` might return:
 This tells us:
 
 * MongoDB used the `customerId_1` index `(IXSCAN)`
-* Only one document was examined and returned
-* The query completed in 6ms which is very efficient
+* Only 25 documents was examined and returned
+* The query completed in ~10ms which is very efficient
 
 ---
 

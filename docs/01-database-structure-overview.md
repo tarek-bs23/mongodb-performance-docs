@@ -18,7 +18,7 @@ Each collection represents a core part of a modern e-commerce system, designed t
 
 Stores all types of users like customers, vendors, and admins are forming the foundation of the system. Referenced in almost every other collection such as orders, reviews, sessions, and activities.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   email: String,
@@ -54,7 +54,7 @@ Stores all types of users like customers, vendors, and admins are forming the fo
 
 Captures all purchase transactions made by customers. Each order references a user (`customerId`) and multiple products.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   orderNumber: String,
@@ -92,7 +92,7 @@ Captures all purchase transactions made by customers. Each order references a us
 
 Stores product details such as name, category, price, stock, and specs. Central to the e-commerce model and referenced by orders and reviews.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   sku: String,
@@ -124,7 +124,7 @@ Stores product details such as name, category, price, stock, and specs. Central 
 
 Tracks user actions for analytics, personalization, and auditing. Designed for high-write, append-only workloads.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   userId: ObjectId(),        // references users._id
@@ -145,7 +145,7 @@ Tracks user actions for analytics, personalization, and auditing. Designed for h
 
 Stores educational and marketing articles created by admins or vendors. Useful for displaying blog or knowledge base content in the platform.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   title: String,
@@ -165,7 +165,7 @@ Stores educational and marketing articles created by admins or vendors. Useful f
 
 Stores user comments related to blog posts. Kept in a separate collection for better scalability and data organization.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   postId: ObjectId(),        // references blogPosts._id
@@ -184,7 +184,7 @@ Stores user comments related to blog posts. Kept in a separate collection for be
 Represents physical business locations such as stores, warehouses, and pickup points.
 
 
-```javascript
+```js
 {
   _id: ObjectId(),
   name: String,
@@ -210,7 +210,7 @@ Represents physical business locations such as stores, warehouses, and pickup po
 
 Captures detailed application-level events for performance monitoring and debugging.
 
-```javascript
+```js
 {
   _id: ObjectId(),
   level: String,             // "info", "warning", "error", "critical"
@@ -285,7 +285,7 @@ Before running the seeding script, ensure the following are installed and config
 
 5. **Verify the Data**:
    Connect to your MongoDB instance using the `mongosh` shell or MongoDB Compass and run:
-   ```javascript
+   ```js
    use techhub-ecommerce
    db.users.countDocuments()  // Should return ~1,000,000
    db.orders.countDocuments() // Should return ~10,000,000
