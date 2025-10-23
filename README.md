@@ -6,7 +6,8 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 ## 📚 Topics Covered
 
-For a browsable index, see the docs homepage: [docs/index.md](./docs/index.md)
+Explore the full MongoDB Performance documentation, including a browsable index of all topics, on the GitHub Pages site: [MongoDB Performance Docs](https://tarek-bs23.github.io/mongodb-performance-docs/)
+
 
 1. [Database Structure Overview](./docs/01-database-structure-overview.md)
    - Collections and Documents
