@@ -45,10 +45,10 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
    - Indexing Best Practices
 
 6. [Query Optimization](./06-query-optimization.md)
-   - Efficient query patterns
-   - Avoiding anti-patterns (`$where`, `$regex`, `$in`)
-   - Pagination strategies
-   - Query performance tuning
+   - Optimizing Read Queries
+   - Avoiding Common Anti-Patterns
+   - Pagination Strategies
+   - Projection and Filtering
 
 7. [Aggregation Optimization](./07-aggregation-optimization.md)
    - Pipeline stage ordering
