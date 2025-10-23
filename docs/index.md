@@ -38,10 +38,11 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
    - Storage engine basics (WiredTiger)
 
 5. [Indexing Strategies](./05-indexing-strategies.md)
-   - Types of indexes: single, compound, multikey, text, geo
-   - Covered queries and index cardinality
-   - Indexing best practices
-   - Index maintenance and optimization
+   - Types of indexes: single, compound, multikey, text, geo etc.
+   - Compound Index (with ESR Rule)
+   - Covered queries
+   - Index Selection and Cardinality
+   - Indexing Best Practices
 
 6. [Query Optimization](./06-query-optimization.md)
    - Efficient query patterns
