@@ -22,25 +22,25 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 2. [Introduction](./02-introduction.md)
    - What is MongoDB query performance?
-   - Importance of query performance
-   - Overview of MongoDB architecture
+   - Why Performance Matters
+   - Overview of Tools and Techniques
 
 3. [Monitoring and Profiling](./03-monitoring-and-profiling.md)
-   - Using `explain()` and interpreting output
-   - MongoDB Compass performance tab
-   - Query profiler and logs
-   - Performance monitoring tools
+   - Using `explain()` and Interpreting Output
+   - MongoDB Compass Performance Tab
+   - Query Profiler and Logs
+   - Performance Advisor
 
 4. [MongoDB Internals](./04-mongodb-internals.md)
    - How MongoDB Stores Data (BSON, Documents, Collections)
-   - How MongoDB executes queries
-   - Query planner and execution stages
-   - Storage engine basics (WiredTiger)
+   - Storage Engine Basics (WiredTiger)
+   - How MongoDB Executes Queries
+   - Query Planner and Execution Stages
 
 5. [Indexing Strategies](./05-indexing-strategies.md)
-   - Types of indexes: single, compound, multikey, text, geo etc.
+   - Types of Indexes
    - Compound Index (with ESR Rule)
-   - Covered queries
+   - Covered Queries
    - Index Selection and Cardinality
    - Indexing Best Practices
 
