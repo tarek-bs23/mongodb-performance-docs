@@ -14,13 +14,16 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
 
 ## 📚 Topics Covered
 
-1. [Introduction](./01-introduction.md)
+1. [Database Structure Overview](./01-database-structure-overview.md)
+   - Collections and Documents
+   - Schema Relationships Overview
+   - Dataset Size Plan
+   - Data Seeding Guideline
+
+2. [Introduction](./02-introduction.md)
    - What is MongoDB query performance?
    - Importance of query performance
    - Overview of MongoDB architecture
-
-2. [Database Structure Overview](./02-database-structure-overview.md)
-   - Collections and documents
 
 3. [MongoDB Internals](./03-mongodb-internals.md)
    - How MongoDB Stores Data (BSON, Documents, Collections)
@@ -69,22 +72,3 @@ Welcome to the **MongoDB Query Performance Check and Optimization Guide**. A com
     - Performance benchmarks
     - Best practices implementation
     - Lessons learned
-
----
-
-## 🛠️ Requirements
-
-- MongoDB (local installation)
-- MongoDB Compass (optional)
-
-<!-- ---
-
-## 📦 Sample Dataset
-
-A synthetic e-commerce dataset is included in the `data/` folder. Import it using:
-
-```bash
-mongoimport --db ecommerce --collection orders --file ./data/orders-sample.json --jsonArray 
-```
-
--->

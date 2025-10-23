@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "2. Database Structure Overview"
-nav_order: 2
+title: "1. Database Structure Overview"
+nav_order: 1
 ---
 
-# 2. Database Structure Overview
+# 1. Database Structure Overview
 
 This section documents the complete MongoDB schema design for the **TechHub E-Commerce Platform**, a simulated large-scale application used throughout this guide to demonstrate **query performance**, **schema design patterns**, and **real-world optimization techniques**.
 
@@ -12,7 +12,9 @@ Each collection represents a core part of a modern e-commerce system, designed t
 
 ---
 
-## 🧍‍♂️ **1. Users Collection**
+## Collections and documents
+
+### 🧍‍♂️ **1. Users Collection**
 
 Stores all types of users like customers, vendors, and admins are forming the foundation of the system. Referenced in almost every other collection such as orders, reviews, sessions, and activities.
 
@@ -48,7 +50,7 @@ Stores all types of users like customers, vendors, and admins are forming the fo
 ```
 
 
-## 🛒 **2. Orders Collection**
+### 🛒 **2. Orders Collection**
 
 Captures all purchase transactions made by customers. Each order references a user (`customerId`) and multiple products.
 
@@ -86,7 +88,7 @@ Captures all purchase transactions made by customers. Each order references a us
 }
 ```
 
-## 📦 **3. Products Collection**
+### 📦 **3. Products Collection**
 
 Stores product details such as name, category, price, stock, and specs. Central to the e-commerce model and referenced by orders and reviews.
 
@@ -118,7 +120,7 @@ Stores product details such as name, category, price, stock, and specs. Central 
 }
 ```
 
-## 🧭 **4. User Activity Collection**
+### 🧭 **4. User Activity Collection**
 
 Tracks user actions for analytics, personalization, and auditing. Designed for high-write, append-only workloads.
 
@@ -139,7 +141,7 @@ Tracks user actions for analytics, personalization, and auditing. Designed for h
 }
 ```
 
-## 📝 **5. Blog Posts Collection**
+### 📝 **5. Blog Posts Collection**
 
 Stores educational and marketing articles created by admins or vendors. Useful for displaying blog or knowledge base content in the platform.
 
@@ -159,7 +161,7 @@ Stores educational and marketing articles created by admins or vendors. Useful f
 }
 ```
 
-## 💬 **6. Comments Collection**
+### 💬 **6. Comments Collection**
 
 Stores user comments related to blog posts. Kept in a separate collection for better scalability and data organization.
 
@@ -177,7 +179,7 @@ Stores user comments related to blog posts. Kept in a separate collection for be
 }
 ```
 
-## 🏬 **7. Places Collection**
+### 🏬 **7. Places Collection**
 
 Represents physical business locations such as stores, warehouses, and pickup points.
 
@@ -204,7 +206,7 @@ Represents physical business locations such as stores, warehouses, and pickup po
 }
 ```
 
-## ⚙️ **8. Logs Collection**
+### ⚙️ **8. Logs Collection**
 
 Captures detailed application-level events for performance monitoring and debugging.
 
@@ -239,12 +241,63 @@ Captures detailed application-level events for performance monitoring and debugg
 
 | Collection     | Approx. Records | Description                       |
 | -------------- | --------------- | --------------------------------- |
-| `users`        | 500,000         | Mix of customers, vendors, admins |
-| `products`     | 10,000          | Electronics, accessories, etc.    |
-| `orders`       | 5,000,000       | Linked to users and products      |
-| `userActivity` | 50,000,000+     | High-volume analytics data        |
-| `blogPosts`    | 1,000           | Authored by admins/vendors        |
-| `comments`     | 25,000          | User interactions                 |
-| `places`       | 500             | Store and warehouse locations     |
-| `logs`         | 100,000,000+    | System and application logs       |
+| `users`        | 1,000,000         | Mix of customers, vendors, admins |
+| `products`     | 100,000          | Electronics, accessories, etc.    |
+| `orders`       | 10,000,000       | Linked to users and products      |
+| `userActivity` | 20,000,000      | High-volume analytics data        |
+| `blogPosts`    | 100,000           | Authored by admins/vendors        |
+| `comments`     | 2,500,000          | User interactions                 |
+| `places`       | 5,000             | Store and warehouse locations     |
+| `logs`         | 50,000,000    | System and application logs       |
 
+--- 
+
+## 🗃️ Data Seeding Guideline
+
+To populate your local MongoDB database with sample data for the **TechHub E-Commerce Platform**, follow these steps to run the provided seeding script. This ensures consistency across the examples in this documentation.
+
+### Prerequisites
+Before running the seeding script, ensure the following are installed and configured:
+- **MongoDB**: Version 7.0 or higher, with a running local instance (e.g., `mongod`). [Install MongoDB](https://www.mongodb.com/docs/manual/installation/).
+- **Node.js**: Version .x or higher. [Download Node.js](https://nodejs.org/).
+- **Git**: Required to clone the repository. [Install Git](https://git-scm.com/downloads).
+- A terminal or command-line interface (e.g., Bash, PowerShell, or Terminal).
+- Ensure your MongoDB instance is running and accessible at `mongodb://localhost:27017`.
+
+### Steps to Seed the Database
+1. **Clone the Repository**:
+   Clone the Git repository containing the seeding script:
+   ```bash
+   git clone https://github.com/tarek-bs23/mongodb-performance-docs.git
+   ```
+
+2. **Navigate to the Scripts Directory**:
+   Move to the directory containing the seeding script:
+   ```bash
+   cd mongodb-performance-docs/scripts
+   ```
+
+3. **Run the Seeding Script**:
+   Execute the script to populate your MongoDB database:
+   ```bash
+   node seed-mongodb.js
+   ```
+
+5. **Verify the Data**:
+   Connect to your MongoDB instance using the `mongosh` shell or MongoDB Compass and run:
+   ```javascript
+   use techhub-ecommerce
+   db.users.countDocuments()  // Should return ~1,000,000
+   db.orders.countDocuments() // Should return ~10,000,000
+   db.products.findOne()      // Inspect a single product document
+   ```
+
+### Performance Considerations
+Seeding large collections like `userActivity` (20M+ records) and `logs` (50M+ records) requires significant disk space (approximately 10-20 GB) and may take 30-40 minutes depending on your hardware. Ensure sufficient disk space and CPU resources.
+
+### Notes
+- The seeding script generates approximately 1M users, 10M orders, 100K products, and other records as outlined in the [Dataset Size Plan](#dataset-size-plan).
+- Seeding may take several minutes depending on your system’s performance and database size.
+- Re-running the script will clear the database and re-populate it with fresh data.
+
+For detailed setup instructions or advanced configurations, see the [repository’s documentation](https://github.com/tarek-bs23/mongodb-performance-docs/blob/main/README.md) or open an issue on GitHub.
