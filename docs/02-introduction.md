@@ -26,7 +26,7 @@ In MongoDB, performance is influenced by:
 
 ---
 
-## ⚠️ Why Performance Matters
+## ❓ Why Performance Matters
 
 Let’s take a real-world example.
 
