@@ -9,6 +9,7 @@ color_scheme: dark
 search_enabled: true
 heading_anchors: true
 logo: ""  # This removes any logo and just shows the title
+favicon_ico: "/assets/favicon.ico"  # Added MongoDB favicon
 aux_nav_spacing: normal  # Adjusts the spacing in the navigation
 
 # Navigation ordering
