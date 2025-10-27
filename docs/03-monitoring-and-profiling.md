@@ -20,6 +20,8 @@ db.orders.find({ customerId: ObjectId("68f9debd1c054beae4a21226") })).explain("e
 
 This command shows how MongoDB plans to execute the query and what actually happened during execution.
 
+![mongosh-explain](../assets/mongosh-explain.gif)
+
 ### What to Look for in `explain("executionStats")`
 
 When analyzing query performance using `explain("executionStats")`, here are the key fields to focus on:
@@ -86,6 +88,11 @@ If you're more visual, **MongoDB Compass** is a great GUI tool. It shows:
 
 You can paste your query into the "Aggregations" or "Filter" tab and click "**Explain Plan**" to see a visual breakdown of how MongoDB will execute it. This is super helpful when you're trying to explain performance issues to non-technical stakeholders or teammates who prefer visuals.
 
+![mongo-compass-explain](../assets/mongo-compass-explain.gif)
+
+You can also use the `mongosh` shell within Compass to run `explain()` commands directly.
+
+![mongo-compass-shell](../assets/mongo-compass-shell.gif)
 ---
 
 ## 📋 Query Profiler and Logs
